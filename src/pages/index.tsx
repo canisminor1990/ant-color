@@ -5,6 +5,7 @@ import { contrast, genColor, formatNumber } from '../utils';
 import styled from 'styled-components';
 import ColorItem from './colorItem';
 import Copy from 'react-copy-to-clipboard';
+import Demo from './demo';
 
 // s: 20 c:1.12
 
@@ -73,8 +74,8 @@ export default () => {
   const [rotate, setRotate] = useState(false);
   const [hRotateList, setHRotateList] = useState([-7, -4, 0, 3, 5, 7, 8, 8, 8, 8]);
   const [sList, setSList] = useState([64, 32, 12, 8, 8, 12, 12, 16, 16, 24]);
-  const [cList, setCList] = useState([18.42, 15.08, 6.98, 2.85, 1.83, 1.41, 1.16, 1.11, 1.07, 1.04]);
-  const [lList, setLList] = useState([97, 98]);
+  const [cList, setCList] = useState([18.42, 15.08, 6.98, 2.85, 1.83, 1.41, 1.16, 1.09, 1.07, 1.04]);
+  const [lList, setLList] = useState([]);
   const [saveColors, setSaveColors] = useState([]);
 
   useEffect(() => {
@@ -113,12 +114,21 @@ export default () => {
     );
   };
 
+
+  const changeColor = (colors) => {
+    let newColors = []
+    colors.forEach(c => {
+      newColors.push('#' + convert.hsl.hex(c))
+    })
+    return newColors
+  }
+
   const handleChange = (e, setValue) => {
     const value = formatNumber(e.target.value);
     if (value && value.length === 10) {
       setValue(value);
     } else {
-      message.warn("参数必须为 10 个")
+      message.warn('参数必须为 10 个');
     }
   };
 
@@ -176,12 +186,14 @@ export default () => {
             </Space>
           </Space>
         </View>
-        <View>
+        <View style={{ marginBottom: 32 }}>
           <ColorGroup>
             {group.map(mapColor)}
           </ColorGroup>
         </View>
-        <ColorList />
+        <View>
+          <Demo colors={changeColor(group)} h={target}/>
+        </View>
       </Body>
     </>
   );
