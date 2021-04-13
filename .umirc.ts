@@ -5,5 +5,6 @@ export default defineConfig({
     type: 'none',
   },
   fastRefresh: {},
-  antd:{}
+  antd:{},
+  outputPath:"docs"
 });
